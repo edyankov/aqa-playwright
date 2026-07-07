@@ -1,5 +1,9 @@
 // @ts-check
 import { defineConfig, devices } from '@playwright/test';
+import dotenv from 'dotenv';
+
+// Load environment variables from the .env file (baseURL, basic auth credentials)
+dotenv.config();
 
 /**
  * Playwright configuration.
@@ -25,13 +29,13 @@ export default defineConfig({
 
     /* Shared settings for all the projects below. */
     use: {
-        /* Base URL so we can use relative paths like page.goto('/') */
-        baseURL: 'https://qauto.forstudy.space',
+        /* Base URL taken from the environment (.env) */
+        baseURL: process.env.BASE_URL,
 
-        /* Basic auth for the site (guest / welcome2qauto) — applied to every request */
+        /* Basic auth credentials taken from the environment (.env) */
         httpCredentials: {
-            username: 'guest',
-            password: 'welcome2qauto',
+            username: process.env.HTTP_CREDENTIALS_USERNAME ?? '',
+            password: process.env.HTTP_CREDENTIALS_PASSWORD ?? '',
         },
 
         /* Collect trace, screenshot and video only when something fails — keeps runs light */
